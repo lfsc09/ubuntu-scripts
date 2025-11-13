@@ -19,7 +19,7 @@ fi
 config_file="$HOME/.config/cycle-output-devices.conf"
 mkdir -p "$(dirname "$config_file")"
 
-pactl list short sinks | awk '{print $2 " - " $3}' | \
+pactl list short sinks | awk '{print $2}' | \
 fzf --multi --prompt="Select the audio output devices you want to cycle through: " \
   --header="Use TAB/SHIFT+TAB to select, ENTER to confirm" > "$config_file"
 
