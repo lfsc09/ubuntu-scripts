@@ -1,0 +1,26 @@
+name: Create Release Archive
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set execute permissions on all scripts
+        run: find scripts/ -type f -name "*.sh" -exec chmod +x {} \;
+      
+      - name: Create zip archive with folder structure
+        run: zip -r ubuntu-scripts.zip scripts/
+      
+      - name: Upload zip to release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ubuntu-scripts.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
